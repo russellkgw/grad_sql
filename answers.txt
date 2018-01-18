@@ -1,0 +1,47 @@
+-- Select the basic_fuel_price (BFP), full_95_coast, the % of the full price that is made up by BFP and date. Only return the last 10 records
+
+SELECT
+  basic_fuel_price, full_95_coast, (basic_fuel_price/full_95_coast) * 100, date
+FROM
+  fuel_prices
+ORDER BY
+  date DESC
+LIMIT 10;
+
+
+-- Select the oil price in USD, price in ZAR and date. Only return records with a PriceInZAR < 100.0 and order by date
+
+SELECT
+  op.price AS PriceInUSD,
+  ROUND(op.price * er.rate, 2) AS PriceInZAR,
+  op.date
+FROM
+  oil_prices op
+  INNER JOIN exchange_rates er ON op.date = er.date
+WHERE
+  ROUND(op.price * er.rate, 2) < 100.0
+ORDER BY
+  op.date;
+
+
+-- Select the smallest exchange rate value and source for each source type
+
+SELECT
+  MIN(rate) AS MinRate,
+  source
+FROM
+  exchange_rates
+GROUP BY
+  source;
+
+-- Select the dates of exchange_futures, which do not have a corresponding oil_future record for the same date
+
+SELECT
+  ef.date
+FROM
+  exchange_futures ef
+  LEFT JOIN oil_futures of ON ef.date = of.date
+WHERE
+  ef.settle IS NULL
+ORDER BY
+  ef.date DESC;

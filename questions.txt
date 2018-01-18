@@ -1,0 +1,7 @@
+1 - Select the basic_fuel_price (BFP), full_95_coast, the % of the full price that is made up by BFP and date. Only return the last 10 records
+
+2 - Select the oil price in USD, price in ZAR and date. Only return records with a PriceInZAR < 100.0 and order by date
+
+3 - Select the smallest exchange rate value and source for each source type
+
+4 - Select the dates of exchange_futures, which do not have a corresponding oil_future record for the same date
